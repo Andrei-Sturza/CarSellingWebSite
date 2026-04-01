@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AutoMarket România</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="header">
+    <a href="#" class="brand" id="homeLink" aria-label="Acasă">
+      <span class="logo" aria-hidden="true">🚘</span>
+      <span>
+        <strong>AutoMarket</strong>
+        <small>Piață auto premium România</small>
+      </span>
+    </a>
+    <nav class="user-actions">
+      <button id="authBtn" class="btn ghost">Autentificare</button>
+      <button id="adminBtn" class="btn primary hidden">Admin</button>
+      <button id="logoutBtn" class="btn ghost hidden">Delogare</button>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section id="homeView">
+      <section class="categories" aria-label="Categorii">
+        <button class="category-btn active" data-category="Toate">Toate</button>
+        <button class="category-btn" data-category="Break">Break-uri</button>
+        <button class="category-btn" data-category="Mașină mică">Mașini mici</button>
+        <button class="category-btn" data-category="SUV">SUV-uri</button>
+        <button class="category-btn" data-category="Sedan">Sedan</button>
+        <button class="category-btn" data-category="Electrică">Electrice</button>
+      </section>
+
+      <section class="filters" aria-label="Filtre">
+        <input id="searchInput" type="search" placeholder="Caută marcă sau model" />
+        <select id="brandFilter"><option value="">Toate mărcile</option></select>
+        <select id="cityFilter">
+          <option value="">Toate orașele</option>
+          <option>București</option><option>Cluj-Napoca</option><option>Iași</option><option>Timișoara</option><option>Brașov</option>
+        </select>
+        <select id="fuelFilter">
+          <option value="">Toate tipurile de combustibil</option>
+          <option>Benzină</option><option>Diesel</option><option>Electric</option><option>Hibrid</option>
+        </select>
+        <div class="price-range">
+          <input id="minPrice" type="number" min="0" placeholder="Preț minim (€)" />
+          <input id="maxPrice" type="number" min="0" placeholder="Preț maxim (€)" />
+        </div>
+        <button id="resetFilters" class="btn ghost">Resetează filtrele</button>
+      </section>
+
+      <section>
+        <div id="carGrid" class="car-grid"></div>
+        <p id="emptyState" class="empty-state hidden">Nu am găsit rezultate</p>
+      </section>
+    </section>
+
+    <section id="detailView" class="hidden">
+      <button id="backBtn" class="btn ghost back-btn">← Înapoi la rezultate</button>
+      <article class="detail-card">
+        <img id="detailImage" alt="Imagine mașină" />
+        <div class="detail-info">
+          <h2 id="detailTitle"></h2>
+          <p id="detailPrice" class="detail-price"></p>
+          <div class="spec-grid" id="detailSpecs"></div>
+          <p class="detail-desc" id="detailDesc"></p>
+          <div class="detail-actions">
+            <button class="btn primary">Contactează vânzătorul</button>
+            <button class="btn ghost">Programează test drive</button>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <section id="adminPanel" class="admin-panel hidden" aria-label="Panou administrator">
+    <div class="admin-header"><h2>Panou administrator</h2><button id="openAddForm" class="btn primary">Adaugă mașină nouă</button></div>
+    <div id="adminList" class="admin-list"></div>
+  </section>
+
+  <dialog id="loginModal" class="modal">
+    <form id="loginForm" class="modal-content" method="dialog">
+      <h3>Autentificare administrator</h3>
+      <label>Utilizator <input id="username" type="text" autocomplete="username" required /></label>
+      <label>Parolă <input id="password" type="password" autocomplete="current-password" required /></label>
+      <p class="hint">Sesiunea expiră automat după 8 ore. După 5 încercări greșite, autentificarea este blocată 5 minute.</p>
+      <p id="loginError" class="error hidden">Datele de autentificare sunt incorecte.</p>
+      <div class="modal-actions"><button type="button" id="closeLogin" class="btn ghost">Anulează</button><button type="submit" class="btn primary">Intră în cont</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="carModal" class="modal">
+    <form id="carForm" class="modal-content" method="dialog">
+      <h3>Adaugă mașină</h3>
+      <div class="form-grid">
+        <label>Marcă <input name="marca" required /></label><label>Model <input name="model" required /></label>
+        <label>Preț (€) <input type="number" name="pret" min="1" required /></label><label>An <input type="number" name="an" min="1990" max="2026" required /></label>
+        <label>Kilometraj <input type="number" name="kilometraj" min="0" required /></label>
+        <label>Combustibil <select name="combustibil" required><option>Benzină</option><option>Diesel</option><option>Electric</option><option>Hibrid</option></select></label>
+        <label>Cutie viteze <select name="cutie" required><option>Manuală</option><option>Automată</option></select></label>
+        <label>Oraș <select name="oras" required><option>București</option><option>Cluj-Napoca</option><option>Iași</option><option>Timișoara</option><option>Brașov</option></select></label>
+        <label>Categorie <select name="categorie" required><option>Break</option><option>Mașină mică</option><option>SUV</option><option>Sedan</option><option>Electrică</option></select></label>
+        <label>Imagine URL <input name="imagine" placeholder="https://..." /></label>
+      </div>
+      <div class="modal-actions"><button type="button" id="cancelCar" class="btn ghost">Anulează</button><button type="submit" class="btn primary">Salvează</button></div>
+    </form>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
